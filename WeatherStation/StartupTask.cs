@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Net.Http;
 using Windows.ApplicationModel.Background;
-using Windows.Devices.Gpio;
 using Windows.System.Threading;
+using Windows.Devices.Gpio;
 
-namespace BlinkyHeadlessCS
+namespace WeatherStation
 {
     public sealed class StartupTask : IBackgroundTask
     {
