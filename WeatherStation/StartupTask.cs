@@ -21,8 +21,7 @@ namespace WeatherStation
             deferral = taskInstance.GetDeferral();
             InitGPIO();
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
-            //TemperatureSensor.InitSensor();
-            //timer = ThreadPoolTimer.CreatePeriodicTimer(TemperatureSensor.ReadTemperature, TimeSpan.FromMilliseconds(5000));
+            PressureSensor.InitializeAsync();
         }
 
         private void InitGPIO()
