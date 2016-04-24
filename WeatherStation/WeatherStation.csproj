@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>ARM</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemperatureSensor.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

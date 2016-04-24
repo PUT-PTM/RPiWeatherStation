@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Http;
 using Windows.ApplicationModel.Background;
 using Windows.System.Threading;
 using Windows.Devices.Gpio;
@@ -13,7 +9,7 @@ namespace WeatherStation
     {
         BackgroundTaskDeferral deferral;
         private GpioPinValue value = GpioPinValue.High;
-        private const int LED_PIN = 5;
+        private const int LED_PIN = 47;
         private GpioPin pin;
         private ThreadPoolTimer timer;
 
@@ -22,8 +18,10 @@ namespace WeatherStation
             deferral = taskInstance.GetDeferral();
             InitGPIO();
             timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
-
+            //TemperatureSensor.InitSensor();
+            //timer = ThreadPoolTimer.CreatePeriodicTimer(TemperatureSensor.ReadTemperature, TimeSpan.FromMilliseconds(5000));
         }
+
         private void InitGPIO()
         {
             pin = GpioController.GetDefault().OpenPin(LED_PIN);
