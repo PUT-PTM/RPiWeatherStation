@@ -9,14 +9,14 @@
 
   <Identity
     Name="WeatherStation-uwp"
-    Publisher="CN=wituc"
+    Publisher="CN=wojci"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="836e1c44-7ec7-4a03-ae50-22628cb2702f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="3de8ddfe-9085-462d-a366-4fd2ffa3b6e6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>WeatherStation</DisplayName>
-    <PublisherDisplayName>wituc</PublisherDisplayName>
+    <PublisherDisplayName>wojci</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

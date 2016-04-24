@@ -1,12 +1,15 @@
 ﻿using System;
 using Windows.ApplicationModel.Background;
-using Windows.System.Threading;
 using Windows.Devices.Gpio;
+using Windows.System.Threading;
+
+// The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
 namespace WeatherStation
 {
     public sealed class StartupTask : IBackgroundTask
     {
+
         BackgroundTaskDeferral deferral;
         private GpioPinValue value = GpioPinValue.High;
         private const int LED_PIN = 47;
@@ -34,6 +37,9 @@ namespace WeatherStation
             value = (value == GpioPinValue.High) ? GpioPinValue.Low : GpioPinValue.High;
             pin.Write(value);
         }
+    
     }
 }
+
+
 
