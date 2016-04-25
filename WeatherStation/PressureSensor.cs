@@ -127,9 +127,9 @@ namespace WeatherStation
 
         private static async Task ReadUncompestatedPressure()
         {
-            var command = new[] { BMP180_REG_CONTROL, BMP180_COM_PRESSURE1 };
+            var command = new[] { BMP180_REG_CONTROL, BMP180_COM_PRESSURE3 };
             _sensor.Write(command);
-            await Task.Delay(8);
+            await Task.Delay(17);
             _uncompestatedPressure = WriteRead(BMP180_REG_RESULT, 3);
         }
 
@@ -142,11 +142,11 @@ namespace WeatherStation
         internal static void CalculateTemperatureAndPressure()
         {
             //Dokładność pomiarów
-            var oss = 1;
+            var oss = 3;
 
             //Niezbędne przesunięcia bitowe
             var temperature = (_uncompestatedTemperature[0] << 8) + _uncompestatedTemperature[1];
-            var pressure = ((_uncompestatedPressure[0] << 16) + (_uncompestatedPressure[1] << 8) + _uncompestatedPressure[2]) >> 7;
+            var pressure = ((_uncompestatedPressure[0] << 16) + (_uncompestatedPressure[1] << 8) + _uncompestatedPressure[2]) >> 8-oss;
 
             //Wyliczenie temperatury zgodnie z algorytmem
             var X1 = (temperature - _calibrationData.AC6) * (_calibrationData.AC5) >> 15;
@@ -182,7 +182,6 @@ namespace WeatherStation
             X2_l = (-7357 * p) >> 16;
             p = p + (X1_l + X2_l + 3791) /16;
             Pressure = p/100.0;
-
         }
     }
 

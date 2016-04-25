@@ -20,14 +20,13 @@ namespace WeatherStation
         {
             deferral = taskInstance.GetDeferral();
             InitGPIO();
-            //timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
             await PressureSensor.InitializeAsync();
             if (PressureSensor.IsInitialized)
             {
                 await PressureSensor.ReadRawData();
                 PressureSensor.CalculateTemperatureAndPressure();
             }
-               
+            //timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(5000));     
         }
 
         private void InitGPIO()
@@ -37,7 +36,7 @@ namespace WeatherStation
             pin.SetDriveMode(GpioPinDriveMode.Output);
         }
 
-        private void Timer_Tick(ThreadPoolTimer timer)
+        private async void Timer_Tick(ThreadPoolTimer timer)
         {
             value = (value == GpioPinValue.High) ? GpioPinValue.Low : GpioPinValue.High;
             pin.Write(value);
