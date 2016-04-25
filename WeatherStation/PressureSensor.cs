@@ -9,6 +9,7 @@ namespace WeatherStation
     {
         public static bool IsInitialized { get; private set; } = false;
         private static I2cDevice _sensor;
+        private static CalibrationData _calibrationData;
 
         //Adres czujnika
         private const byte MP180_ADDR = 0x77;
@@ -32,7 +33,7 @@ namespace WeatherStation
         //Rejestr ciśnienia w trybie Ultra High Resolution
         private const byte BMP180_COM_PRESSURE3 = 0xF4;
 
-        //Rejestry kalibracyjne
+        //Adresy rejestrow kalibracyjnych
         private const byte BMP180_CAL_AC1 = 0xAA;
         private const byte BMP180_CAL_AC2 = 0xAC;
         private const byte BMP180_CAL_AC3 = 0xAE;
@@ -44,7 +45,7 @@ namespace WeatherStation
         private const byte BMP180_CAL_MB = 0xBA;
         private const byte BMP180_CAL_MC = 0xBC;
         private const byte BMP180_CAL_MD = 0xBE;
-
+  
         internal static async Task InitializeAsync()
         {
             var selectorString = I2cDevice.GetDeviceSelector();
@@ -53,10 +54,78 @@ namespace WeatherStation
             var settings = new I2cConnectionSettings(MP180_ADDR);
             settings.BusSpeed = I2cBusSpeed.StandardMode;
             _sensor = await I2cDevice.FromIdAsync(deviceId, settings);
-
-            //TODO Odczytać dane kalibracyjne z czujnika
-       
+            _calibrationData = new CalibrationData();
+            ReadCalibrationData();
             IsInitialized = true;
         }
+   
+        private static void ReadCalibrationData()
+        {
+            var data = WriteRead(BMP180_CAL_AC1, 2);
+            Array.Reverse(data);
+            _calibrationData.AC1 = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_AC2, 2);
+            Array.Reverse(data);
+            _calibrationData.AC2 = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_AC3, 2);
+            Array.Reverse(data);
+            _calibrationData.AC3 = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_AC4, 2);
+            Array.Reverse(data);
+            _calibrationData.AC4 = BitConverter.ToUInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_AC5, 2);
+            Array.Reverse(data);
+            _calibrationData.AC5 = BitConverter.ToUInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_AC6, 2);
+            Array.Reverse(data);
+            _calibrationData.AC6 = BitConverter.ToUInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_B1, 2);
+            Array.Reverse(data);
+            _calibrationData.B1 = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_B2, 2);
+            Array.Reverse(data);
+            _calibrationData.B2 = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_MB, 2);
+            Array.Reverse(data);
+            _calibrationData.MB = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_MC, 2);
+            Array.Reverse(data);
+            _calibrationData.MC = BitConverter.ToInt16(data, 0);
+
+            data = WriteRead(BMP180_CAL_MD, 2);
+            Array.Reverse(data);
+            _calibrationData.MD = BitConverter.ToInt16(data, 0);
+        }
+
+        private static byte [] WriteRead(byte register, int length)
+        {
+            var buffer = new byte[length];
+            _sensor.WriteRead(new[] { register }, buffer);
+            return buffer;
+        }
+    }
+
+    public sealed class CalibrationData
+    {
+        public short AC1 { get; set; }
+        public short AC2 { get; set; }
+        public short AC3 { get; set; }
+        public ushort AC4 { get; set; }
+        public ushort AC5 { get; set; }
+        public ushort AC6 { get; set; }
+        public short B1 { get; set; }
+        public short B2 { get; set; }
+        public short MB { get; set; }
+        public short MC { get; set; }
+        public short MD { get; set; }
     }
 }
