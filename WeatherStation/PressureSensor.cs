@@ -8,8 +8,12 @@ namespace WeatherStation
     public static class PressureSensor
     {
         public static bool IsInitialized { get; private set; } = false;
+        public static double Temperature { get; private set; } = 0;
+        public static double Pressure { get; private set; } = 0;
         private static I2cDevice _sensor;
         private static CalibrationData _calibrationData;
+        private static byte[] _uncompestatedTemperature;
+        private static byte[] _uncompestatedPressure;
 
         //Adres czujnika
         private const byte MP180_ADDR = 0x77;
@@ -112,6 +116,30 @@ namespace WeatherStation
             _sensor.WriteRead(new[] { register }, buffer);
             return buffer;
         }
+
+        private static async Task ReadUncompestatedTemperature()
+        {
+            var command = new[] { BMP180_REG_CONTROL, BMP180_COM_TEMPERATURE };
+            _sensor.Write(command);
+            await Task.Delay(5);
+            _uncompestatedTemperature= WriteRead(BMP180_REG_RESULT, 2); 
+        }
+
+        private static async Task ReadUncompestatedPressure()
+        {
+            var command = new[] { BMP180_REG_CONTROL, BMP180_COM_PRESSURE1 };
+            _sensor.Write(command);
+            await Task.Delay(8);
+            _uncompestatedPressure = WriteRead(BMP180_REG_RESULT, 3);
+        }
+
+        public static async void ReadRawData()
+        {
+            await ReadUncompestatedTemperature();
+            await ReadUncompestatedPressure();
+            int i = 5;
+        }
+
     }
 
     public sealed class CalibrationData
