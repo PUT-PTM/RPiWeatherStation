@@ -141,9 +141,12 @@ namespace WeatherStation
 
         internal static void CalculateTemperatureAndPressure()
         {
+            //Dokładność pomiarów
+            var oss = 1;
+
             //Niezbędne przesunięcia bitowe
             var temperature = (_uncompestatedTemperature[0] << 8) + _uncompestatedTemperature[1];
-            var pressure = ((_uncompestatedPressure[0] <<16) + (_uncompestatedPressure[1]<<8 )+ _uncompestatedPressure[2])>>7;
+            var pressure = ((_uncompestatedPressure[0] << 16) + (_uncompestatedPressure[1] << 8) + _uncompestatedPressure[2]) >> 7;
 
             //Wyliczenie temperatury zgodnie z algorytmem
             var X1 = (temperature - _calibrationData.AC6) * (_calibrationData.AC5) >> 15;
@@ -153,33 +156,32 @@ namespace WeatherStation
             Temperature = t / 10.0;
 
             //Wyliczenie ciśnienia zgodnie z algorytmem
-            //FIX 
             long B6 = B5 - 4000;
-            long X1_l = (BMP180_CAL_B2 * (B6 * (B6 >> 12)) >> 11);
-            long X2_l = BMP180_CAL_AC2 * (B6 >> 11);
+            long X1_l = (_calibrationData.B2 * (B6 * (B6 >> 12)) >> 11); 
+            long X2_l = _calibrationData.AC2 * B6 >> 11;
             long X3 = X1_l + X2_l;
-            long B3 = (((BMP180_CAL_AC1 * 4 + X3) << 1) + 2) >>2;
-            X1_l = BMP180_CAL_AC3 * B6 >> 13;
-            X2_l = (BMP180_CAL_B1 * (B6 * B6 >> 12)) >> 16;
+            long B3 = (((_calibrationData.AC1 * 4 + X3) << oss) + 2) /4; 
+            X1_l = _calibrationData.AC3 * B6 >> 13;
+            X2_l = (_calibrationData.B1 * (B6 * B6 >> 12)) >> 16;
             X3 = ((X1_l + X2_l) + 2) >> 2;
-            UInt64 B4 = BMP180_CAL_AC4 * ((UInt64)X3 + 32768) >> 15;
-            UInt64 B7 = ((UInt64)(pressure - B3)) * (50000 >> 1);
+            ulong B4 = _calibrationData.AC4 * ((ulong)X3 + 32768) >> 15;
+            ulong B7 = (ulong)(pressure - B3)* (ulong)(50000 >> oss); 
             long p;
 
             if(B7 < 0x80000000)
             {
-                p = ((long)B7 * 2) / (long)B4;
+                p = (Convert.ToInt64(B7) * 2) / Convert.ToInt64(B4);
             }
 
             else
             {
-                p = ((long)B7 / (long)B4) * 2;
+                p = (Convert.ToInt64(B7) / Convert.ToInt64(B4))*2;
             }
-            long x = (p >> 8) * (p >> 8);
-            x = (x * 3038) >> 16;
-            long y = ((-7357) * (int)p) >> 16;
-            long resultPressure = (int)p + ((int)x + y + 3791) >> 4;
-            Pressure = resultPressure/100.0;
+            X1_l = (p >> 8) * (p >> 8);
+            X1_l = (X1_l * 3038)>> 16;
+            X2_l = (-7357 * p) >> 16;
+            p = p + (X1_l + X2_l + 3791) /16;
+            Pressure = p/100.0;
 
         }
     }
