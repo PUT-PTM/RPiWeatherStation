@@ -16,13 +16,18 @@ namespace WeatherStation
         private GpioPin pin;
         private ThreadPoolTimer timer;
 
-        public void Run(IBackgroundTaskInstance taskInstance)
+        public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
             InitGPIO();
             //timer = ThreadPoolTimer.CreatePeriodicTimer(Timer_Tick, TimeSpan.FromMilliseconds(500));
-            PressureSensor.InitializeAsync();
-            PressureSensor.ReadRawData();
+            await PressureSensor.InitializeAsync();
+            if (PressureSensor.IsInitialized)
+            {
+                await PressureSensor.ReadRawData();
+                PressureSensor.CalculateTemperatureAndPressure();
+            }
+               
         }
 
         private void InitGPIO()
