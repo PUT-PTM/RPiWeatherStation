@@ -10,6 +10,7 @@ namespace WeatherStation
         public static bool IsInitialized { get; private set; } = false;
         public static double Temperature { get; private set; } = 0;
         public static double Pressure { get; private set; } = 0;
+
         private static I2cDevice _sensor;
         private static CalibrationData _calibrationData;
         private static byte[] _uncompestatedTemperature;
@@ -25,7 +26,6 @@ namespace WeatherStation
         private const byte BMP180_COM_SOFTRESET = 0xE0;
         //Adres wynikowy
         private const byte BMP180_REG_RESULT = 0xF6;
-
         //Rejestr temperatury 
         private const byte BMP180_COM_TEMPERATURE = 0x2E;
         //Rejestr ciśnienia w trybie Ultra Low Power
@@ -36,7 +36,6 @@ namespace WeatherStation
         private const byte BMP180_COM_PRESSURE2 = 0xB4;
         //Rejestr ciśnienia w trybie Ultra High Resolution
         private const byte BMP180_COM_PRESSURE3 = 0xF4;
-
         //Adresy rejestrow kalibracyjnych
         private const byte BMP180_CAL_AC1 = 0xAA;
         private const byte BMP180_CAL_AC2 = 0xAC;
@@ -49,7 +48,6 @@ namespace WeatherStation
         private const byte BMP180_CAL_MB = 0xBA;
         private const byte BMP180_CAL_MC = 0xBC;
         private const byte BMP180_CAL_MD = 0xBE;
-  
         internal static async Task InitializeAsync()
         {
             var selectorString = I2cDevice.GetDeviceSelector();
