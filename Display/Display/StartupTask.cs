@@ -69,15 +69,15 @@ namespace Display
             SendCommand(new byte[] { 0x11 }); //Exit sleep
             Task.Delay(120);
 
-            SendCommand(new byte[] { 0x3A }); //Set Color format 16 bit
-            SendData(new byte[] { 0x05 });
-            Task.Delay(5);
+            //SendCommand(new byte[] { 0x3A }); //Set Color format 16 bit
+            //SendData(new byte[] { 0x05 });
+            //Task.Delay(5);
 
-            SendCommand(new byte[] { 0x13 }); //Normal mode
-            Task.Delay(5);
+            //SendCommand(new byte[] { 0x13 }); //Normal mode
+            //Task.Delay(5);
 
-            SendCommand(new byte[] { 0x38 }); //Iddle mode off
-            Task.Delay(5);
+            //SendCommand(new byte[] { 0x38 }); //Iddle mode off
+            //Task.Delay(5);
 
             SendCommand(new byte[] { 0x2A }); //Column adress
             SendData(new byte[] { 0x00 });
@@ -91,12 +91,26 @@ namespace Display
 
             SendCommand(new byte[] { 0x29 }); //Display on
             Task.Delay(5);
+
+            SendCommand(new byte[] { 0x28 }); //Display off
+            Task.Delay(5);
+
+            SendCommand(new byte[] { 0x29 }); //Display on
+            Task.Delay(5);
+
+            SendCommand(new byte[] { 0x21 }); //Inversion on
+            Task.Delay(5);
+
+            SendCommand(new byte[] { 0x20 }); //Inversion off
+            Task.Delay(5);
+
             SendCommand(new byte[] { 0x2C }); //Ram Write
 
             for (int j = 0; j< 16384; j++)
             {
                 SendData(new byte[] { 0x64 });
                 SendData(new byte[] { 0x64 });
+                SendData(new byte[] { 192 });
             }
             SendCommand(new byte[] { 0x00 });//Interrupt Ram writing
             int i = 5;
