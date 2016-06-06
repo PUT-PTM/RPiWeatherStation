@@ -16,7 +16,7 @@ namespace Display
     public sealed class StartupTask : IBackgroundTask
     {
         private GpioController _gpioController;
-         private SpiDevice _spiDisplay;
+        private SpiDevice _spiDisplay;
         private GpioPin _configurationPin;
         private GpioPin _resetPin;
         private const string SPI_CONTROLLER_NAME = "SPI0";
@@ -43,8 +43,8 @@ namespace Display
         private async void InitSpi() 
         {
             var settings = new SpiConnectionSettings(SPI_CHIP_SELECT_LINE);
-                settings.ClockFrequency = 8000000;                           
-                settings.Mode = SpiMode.Mode0;                                                                                                          
+            settings.ClockFrequency = 8000000;                           
+            settings.Mode = SpiMode.Mode0;                                                                                                          
             string spiAqs = SpiDevice.GetDeviceSelector(SPI_CONTROLLER_NAME);       
             var devicesInfo = await DeviceInformation.FindAllAsync(spiAqs);         
             _spiDisplay = await SpiDevice.FromIdAsync(devicesInfo[0].Id, settings);  
@@ -61,59 +61,46 @@ namespace Display
             _spiDisplay.Write(data);
             _configurationPin.Write(GpioPinValue.Low);
         }
+        private void SendPixelData(Int32 red, Int32 green, Int32 blue)
+        {
+            var redByteArray = BitConverter.GetBytes(red);
+            var greenByteArray = BitConverter.GetBytes(green);
+            var blueByteArray = BitConverter.GetBytes(blue);
+
+            var finalRedArray = new byte[1];
+            finalRedArray[0] = redByteArray.First();
+
+            var finalGreenArray = new byte[1];
+            finalGreenArray[0] = greenByteArray.First();
+
+            var finalBlueArray = new byte[1];
+            finalBlueArray[0] = blueByteArray.First();
+
+            SendData(finalBlueArray); 
+            SendData(finalGreenArray); 
+            SendData(finalRedArray); 
+        }
+
         private void InitChip()
         {
-            SendCommand(new byte[] { 0x01 }); //Software reset
-            Task.Delay(5);
-
             SendCommand(new byte[] { 0x11 }); //Exit sleep
-            Task.Delay(120);
+            Task.Delay(1);
 
-            //SendCommand(new byte[] { 0x3A }); //Set Color format 16 bit
-            //SendData(new byte[] { 0x05 });
-            //Task.Delay(5);
+            SendCommand(new byte[] { 0x13 }); //Normal mode
+            Task.Delay(1);
 
-            //SendCommand(new byte[] { 0x13 }); //Normal mode
-            //Task.Delay(5);
-
-            //SendCommand(new byte[] { 0x38 }); //Iddle mode off
-            //Task.Delay(5);
-
-            SendCommand(new byte[] { 0x2A }); //Column adress
-            SendData(new byte[] { 0x00 });
-            SendData(new byte[] { 128 });
-            Task.Delay(5);
-
-            SendCommand(new byte[] { 0x2B }); //Page adress
-            SendData(new byte[] { 0x00 });
-            SendData(new byte[] {128}); //160
-            Task.Delay(5);
+            SendCommand(new byte[] { 0x38 }); //Iddle mode off
+            Task.Delay(1);
 
             SendCommand(new byte[] { 0x29 }); //Display on
-            Task.Delay(5);
-
-            SendCommand(new byte[] { 0x28 }); //Display off
-            Task.Delay(5);
-
-            SendCommand(new byte[] { 0x29 }); //Display on
-            Task.Delay(5);
-
-            SendCommand(new byte[] { 0x21 }); //Inversion on
-            Task.Delay(5);
-
-            SendCommand(new byte[] { 0x20 }); //Inversion off
-            Task.Delay(5);
+            Task.Delay(1);
 
             SendCommand(new byte[] { 0x2C }); //Ram Write
-
             for (int j = 0; j< 16384; j++)
             {
-                SendData(new byte[] { 0x64 });
-                SendData(new byte[] { 0x64 });
-                SendData(new byte[] { 192 });
+                SendPixelData(0, 63, 0); //Fill screen with green
             }
-            SendCommand(new byte[] { 0x00 });//Interrupt Ram writing
-            int i = 5;
+            SendCommand(new byte[] { 0x00 }); //Interrupt Ram writing
         }
     }
 }
