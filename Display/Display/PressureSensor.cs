@@ -3,7 +3,7 @@ using Windows.Devices.I2c;
 using Windows.Devices.Enumeration;
 using System.Threading.Tasks;
 
-namespace WeatherStation
+namespace Display
 {
     public static class PressureSensor
     {
