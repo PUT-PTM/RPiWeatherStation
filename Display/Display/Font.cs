@@ -102,6 +102,10 @@ namespace Display
                     case '9':
                         WriteNine();
                         break;
+                    case '\\':
+                        i++;
+                        if (textArray[i].Equals('r')) WriteDegreeSymbol();
+                        break;
                 }
             }
             return pixelArray;
@@ -219,6 +223,7 @@ namespace Display
             DrawVerticalLine(6, CursorPosY + 1, CursorPosX);
             DrawVerticalLine(3, CursorPosY + 4, CursorPosX + 4);
             DrawPixel(CursorPosY + 1, CursorPosX + 4);
+            CursorPosX += 7;
         }
 
         private void WriteSeven() //Writes '7' to PixelArray string starting from current cursor position
@@ -228,6 +233,7 @@ namespace Display
             DrawVerticalLine(2, CursorPosY + 4, CursorPosX + 2);
             DrawVerticalLine(2, CursorPosY + 6, CursorPosX + 1);
             DrawPixel(CursorPosY + 3, CursorPosX + 3);
+            CursorPosX += 7;
         }
 
         private void WriteEight() //Writes '8' to PixelArray string starting from current cursor position
@@ -239,6 +245,7 @@ namespace Display
             DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 4);
             DrawVerticalLine(3, CursorPosY + 4, CursorPosX);
             DrawVerticalLine(3, CursorPosY + 4, CursorPosX + 4);
+            CursorPosX += 7;
         }
 
         private void WriteNine() //Writes '9' to PixelArray string starting from current cursor position
@@ -249,6 +256,16 @@ namespace Display
             DrawVerticalLine(2, CursorPosY + 1, CursorPosX);
             DrawVerticalLine(6, CursorPosY + 1, CursorPosX + 4);
             DrawPixel(CursorPosY + 6, CursorPosX);
+            CursorPosX += 7;
+        }
+
+        private void WriteDegreeSymbol() //Writes degree symbol to PixelArray string starting from current cursor position
+        {
+            DrawHorizontalLine(2, CursorPosY, CursorPosX + 1);
+            DrawHorizontalLine(2, CursorPosY + 3, CursorPosX + 1);
+            DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 1);
+            DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 4);
+            CursorPosX += 7;
         }
     }
 }
