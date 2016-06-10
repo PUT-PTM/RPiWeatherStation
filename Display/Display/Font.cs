@@ -78,6 +78,30 @@ namespace Display
                     case '1':
                         WriteOne();
                         break;
+                    case '2':
+                        WriteTwo();
+                        break;
+                    case '3':
+                        WriteThree();
+                        break;
+                    case '4':
+                        WriteFour();
+                        break;
+                    case '5':
+                        WriteFive();
+                        break;
+                    case '6':
+                        WriteSix();
+                        break;
+                    case '7':
+                        WriteSeven();
+                        break;
+                    case '8':
+                        WriteEight();
+                        break;
+                    case '9':
+                        WriteNine();
+                        break;
                 }
             }
             return pixelArray;
