@@ -20,6 +20,7 @@ namespace Display
         int CursorPosX;
         int CursorPosY;
         int DisplayMargin;
+        byte CurrentRed, CurrentGreen, CurrentBlue;
 
         Pixel[,] pixelArray = new Pixel[128, 128];
         int screenHeight = 128;
@@ -30,6 +31,9 @@ namespace Display
             DisplayMargin = margin;
             CursorPosY = margin+1;
             CursorPosX = margin+1;
+            CurrentRed = 0;
+            CurrentGreen = 0;
+            CurrentBlue = 0;
             InitPixelArray();
         }
 
@@ -48,6 +52,13 @@ namespace Display
         {
             CursorPosY = y;
             CursorPosX = x;
+        }
+
+        public void SetCurrentColor(byte SetRed, byte SetGreen, byte SetBlue) //Sets current color for pixels in PixelArray
+        {
+            CurrentRed = SetRed;
+            CurrentGreen = SetGreen;
+            CurrentBlue = SetBlue;
         }
 
         private Pixel[,] WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
@@ -90,18 +101,18 @@ namespace Display
             }
         }  
 
-        private void DrawHorizontalLine(int length, int startPosX, int startPosY, byte red = 0, byte green = 0, byte blue = 0) //Draw horizontal line from given position
+        private void DrawHorizontalLine(int length, int startPosX, int startPosY) //Draw horizontal line from given position
         {
             for (int i = 0; i < length; i++) {
-                DrawPixel(startPosY, startPosX + i, red, green, blue);
+                DrawPixel(startPosY, startPosX + i, CurrentRed, CurrentGreen, CurrentBlue);
             }
         }
 
-        private void DrawVerticalLine(int length, int startPosX, int startPosY, byte red= 0, byte green = 0, byte blue = 0) //Draw vertical line from given position
+        private void DrawVerticalLine(int length, int startPosX, int startPosY) //Draw vertical line from given position
         {
             for (int i = 0; i < length; i++)
             {
-                DrawPixel(startPosY + i, startPosX, red, green, blue);
+                DrawPixel(startPosY + i, startPosX, CurrentRed, CurrentGreen, CurrentBlue);
             }
         }
 
