@@ -189,7 +189,7 @@ namespace Display
             //  return pixelArray;
         }
 
-        private void DrawPixel(int x, int y) //Set single pixel in PixelArray
+        private void DrawPixel(int y, int x) //Set single pixel in PixelArray
         {
             try
             {
@@ -227,10 +227,10 @@ namespace Display
         {
             for (int i = 0; i < borderThickness; i++)
             {
-                DrawHorizontalLine(length, startPosX, startPosY + i);
-                DrawHorizontalLine(length, startPosX, (startPosY + height) - i);
-                DrawVerticalLine(height, startPosX + i, startPosY);
-                DrawVerticalLine(height, (startPosX + length) - i, startPosY);
+                DrawHorizontalLine(length, startPosY, startPosX + i);
+                DrawHorizontalLine(length, startPosY, (startPosX + height) - i);
+                DrawVerticalLine(height, startPosY + i, startPosX);
+                DrawVerticalLine(height, (startPosY + length) - i, startPosX);
             }
         }
 
@@ -238,7 +238,7 @@ namespace Display
         {
             for (int i = 0; i < height; i++)
             {
-                DrawVerticalLine(length, startPosX, startPosY + i);
+                DrawVerticalLine(length, startPosY, startPosX + i);
             }
         }
 
