@@ -81,6 +81,10 @@ namespace Display
             charWidth.Add('Z', 6);
             charWidth.Add('\\', 0);
             charWidth.Add(' ', 3);
+            charWidth.Add('.', 4);
+            charWidth.Add(',', 4);
+            charWidth.Add(';', 4);
+            charWidth.Add(':', 4);
         }
 
         private void InitPixelArray()   //Initializes array of pixels
@@ -229,6 +233,18 @@ namespace Display
                         break;
                     case 'Z':
                         WriteZ();
+                        break;
+                    case '.':
+                        WriteDot();
+                        break;
+                    case ',':
+                        WriteComma();
+                        break;
+                    case ';':
+                        WriteSemicolon();
+                        break;
+                    case ':':
+                        WriteColon();
                         break;
                 }
             }
@@ -686,6 +702,56 @@ namespace Display
             DrawPixel(CursorPosY + 2, CursorPosX + 4);
             DrawPixel(CursorPosY + 1, CursorPosX + 5);
             CursorPosX += 8;
+        }
+
+        private void WriteDot()
+        {
+            DrawPixel(CursorPosY + 7, CursorPosX);
+            DrawPixel(CursorPosY + 6, CursorPosX);
+            DrawPixel(CursorPosY + 7, CursorPosX + 1);
+            DrawPixel(CursorPosY + 6, CursorPosX + 1);
+            CursorPosX += 4;
+        }
+
+        private void WriteComma()
+        {
+            DrawPixel(CursorPosY + 7, CursorPosX);
+            DrawPixel(CursorPosY + 6, CursorPosX);
+            DrawPixel(CursorPosY + 7, CursorPosX + 1);
+            DrawPixel(CursorPosY + 6, CursorPosX + 1);
+            DrawPixel(CursorPosY + 8, CursorPosX + 1);
+            DrawPixel(CursorPosY + 9, CursorPosX);
+            CursorPosX += 4;
+        }
+
+        private void WriteSemicolon()
+        {
+            DrawPixel(CursorPosY + 2, CursorPosX);
+            DrawPixel(CursorPosY + 3, CursorPosX);
+            DrawPixel(CursorPosY + 2, CursorPosX + 1);
+            DrawPixel(CursorPosY + 3, CursorPosX + 1);
+
+            DrawPixel(CursorPosY + 7, CursorPosX);
+            DrawPixel(CursorPosY + 6, CursorPosX);
+            DrawPixel(CursorPosY + 7, CursorPosX + 1);
+            DrawPixel(CursorPosY + 6, CursorPosX + 1);
+            DrawPixel(CursorPosY + 8, CursorPosX + 1);
+            DrawPixel(CursorPosY + 9, CursorPosX);
+            CursorPosX += 4;
+        }
+
+        private void WriteColon()
+        {
+            DrawPixel(CursorPosY + 2, CursorPosX);
+            DrawPixel(CursorPosY + 3, CursorPosX);
+            DrawPixel(CursorPosY + 2, CursorPosX + 1);
+            DrawPixel(CursorPosY + 3, CursorPosX + 1);
+
+            DrawPixel(CursorPosY + 7, CursorPosX);
+            DrawPixel(CursorPosY + 6, CursorPosX);
+            DrawPixel(CursorPosY + 7, CursorPosX + 1);
+            DrawPixel(CursorPosY + 6, CursorPosX + 1);
+            CursorPosX += 4;
         }
     }
 }
