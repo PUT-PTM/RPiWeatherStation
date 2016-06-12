@@ -27,9 +27,11 @@ namespace Display
         private const int SPI_CHIP_SELECT_LINE = 0; 
         private const int A0_PIN = 23;
         private const int RESET_PIN = 24;
+        private Font font;
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
+            font = new Font(5);
             InitGpio();
             InitSpi();
             InitChip();
@@ -121,7 +123,11 @@ namespace Display
         {
             SendCommand(new byte[] { 0x2C }); //Ram Write
 
-            var pixelArray = GetTemperatureScreen(temperature);
+            font.SetCurrentPosition(0, 0);
+            font.SetCurrentColor(63, 63, 63);
+            font.WriteOnScreen("123");
+            var pixelArray = font.pixelArray;
+              
 
             foreach (var pixel in pixelArray)
             {

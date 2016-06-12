@@ -15,18 +15,18 @@ using Windows.Devices.Enumeration;
 
 namespace Display
 {
-    class Font
+    public sealed class Font
     {
         int CursorPosX;
         int CursorPosY;
         int DisplayMargin;
         byte CurrentRed, CurrentGreen, CurrentBlue;
 
-        Pixel[,] pixelArray = new Pixel[128, 128];
+        internal Pixel[,] pixelArray = new Pixel[128, 128];
         int screenHeight = 128;
         int screenWidth = 128;
 
-        public Font(int margin = 0) 
+        public Font(int margin) 
         {
             DisplayMargin = margin;
             CursorPosY = margin+1;
@@ -61,12 +61,12 @@ namespace Display
             CurrentBlue = SetBlue;
         }
 
-        public Pixel[,] WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
+        public void WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
         {
             char[] textArray = text.ToCharArray();
             for (int i = 0; i < textArray.Length; i++)
             {
-                //if (CursorPosX > screenWidth - DisplayMargin) NewLine();
+                if (CursorPosX > screenWidth - DisplayMargin) NewLine();
                 switch (textArray[i])
                 {
                     case ' ':
@@ -186,14 +186,25 @@ namespace Display
                         break;
                 }
             }
-            return pixelArray;
+          //  return pixelArray;
         }
 
         private void DrawPixel(int x, int y) //Set single pixel in PixelArray
         {
-            pixelArray[y, x].Red = CurrentRed;
-            pixelArray[y, x].Green = CurrentGreen;
-            pixelArray[y, x].Blue = CurrentBlue;
+            try
+            {
+                if ((x < 0 + DisplayMargin) || (x >= 128 - DisplayMargin) || (y < 0 + DisplayMargin) || (y >= 128 - DisplayMargin)) throw new System.IndexOutOfRangeException();
+                else
+                {
+                    pixelArray[y, x].Red = CurrentRed;
+                    pixelArray[y, x].Green = CurrentGreen;
+                    pixelArray[y, x].Blue = CurrentBlue;
+                }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Debug.WriteLine("Writing out of range!\n{0}", e.ToString());
+            }
         }  
 
         private void DrawHorizontalLine(int length, int startPosX, int startPosY) //Draw horizontal line from given position
@@ -211,7 +222,7 @@ namespace Display
             }
         }
 
-        private void DrawFrame(int length, int height, int borderThickness, int startPosY, int startPosX) //Draw frame from given position with given thickness
+        private void DrawFrame(int length, int height, int borderThickness, int startPosX, int startPosY) //Draw frame from given position with given thickness
         {
             for (int i = 0; i < borderThickness; i++) {
                 DrawHorizontalLine(length, startPosX, startPosY + i);
@@ -221,7 +232,7 @@ namespace Display
             }
         }
 
-        private void DrawRectangle(int length, int height, int startPosY, int startPosX) //Draw rectangle from given position
+        private void DrawRectangle(int length, int height, int startPosX, int startPosY) //Draw rectangle from given position
         {
             for (int i = 0; i < height; i++)
             {
