@@ -15,18 +15,18 @@ using Windows.Devices.Enumeration;
 
 namespace Display
 {
-    class Font
+    public sealed class Font
     {
         int CursorPosX;
         int CursorPosY;
         int DisplayMargin;
         byte CurrentRed, CurrentGreen, CurrentBlue;
 
-        Pixel[,] pixelArray = new Pixel[128, 128];
+        internal Pixel[,] pixelArray = new Pixel[128, 128];
         int screenHeight = 128;
         int screenWidth = 128;
 
-        public Font(int margin = 5) 
+        public Font(int margin) 
         {
             DisplayMargin = margin;
             CursorPosY = margin+1;
@@ -61,7 +61,7 @@ namespace Display
             CurrentBlue = SetBlue;
         }
 
-        private Pixel[,] WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
+        public void WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
         {
             char[] textArray = text.ToCharArray();
             for (int i = 0; i < textArray.Length; i++)
@@ -138,7 +138,7 @@ namespace Display
                         break;
                 }
             }
-            return pixelArray;
+          //  return pixelArray;
         }
 
         private void DrawPixel(int x, int y, byte red = 0, byte green = 0, byte blue = 0) //Set single pixel in PixelArray
