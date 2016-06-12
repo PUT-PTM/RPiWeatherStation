@@ -35,6 +35,52 @@ namespace Display
             CurrentGreen = 0;
             CurrentBlue = 0;
             InitPixelArray();
+            InitCharWidthDictionary();
+        }
+
+        private Dictionary<char, int> charWidth = new Dictionary<char, int>();
+
+        private void InitCharWidthDictionary()
+        {
+            charWidth.Add('0', 5);
+            charWidth.Add('1', 5);
+            charWidth.Add('2', 5);
+            charWidth.Add('3', 5);
+            charWidth.Add('4', 5);
+            charWidth.Add('5', 5);
+            charWidth.Add('6', 5);
+            charWidth.Add('7', 5);
+            charWidth.Add('8', 5);
+            charWidth.Add('9', 5);
+            charWidth.Add('A', 5);
+            charWidth.Add('B', 5);
+            charWidth.Add('C', 6);
+            charWidth.Add('D', 6);
+            charWidth.Add('E', 5);
+            charWidth.Add('F', 5);
+            charWidth.Add('G', 6);
+            charWidth.Add('H', 6);
+            charWidth.Add('I', 3);
+            charWidth.Add('J', 3);
+            charWidth.Add('K', 5);
+            charWidth.Add('L', 4);
+            charWidth.Add('M', 9);
+            charWidth.Add('N', 6);
+            charWidth.Add('O', 7);
+            charWidth.Add('P', 5);
+            charWidth.Add('Q', 8);
+            charWidth.Add('R', 5);
+            charWidth.Add('r', 5);
+            charWidth.Add('S', 5);
+            charWidth.Add('T', 6);
+            charWidth.Add('U', 5);
+            charWidth.Add('W', 9);
+            charWidth.Add('V', 7);
+            charWidth.Add('X', 5);
+            charWidth.Add('Y', 5);
+            charWidth.Add('Z', 6);
+            charWidth.Add('\\', 0);
+            charWidth.Add(' ', 3);
         }
 
         private void InitPixelArray()   //Initializes array of pixels
@@ -66,7 +112,7 @@ namespace Display
             char[] textArray = text.ToCharArray();
             for (int i = 0; i < textArray.Length; i++)
             {
-                if (CursorPosX > screenWidth - DisplayMargin) NewLine();
+                if ((CursorPosX > screenWidth - DisplayMargin) || (CursorPosX + charWidth[textArray[i]] > screenWidth - DisplayMargin)) NewLine();
                 switch (textArray[i])
                 {
                     case ' ':
