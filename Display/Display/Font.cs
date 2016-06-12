@@ -61,12 +61,12 @@ namespace Display
             CurrentBlue = SetBlue;
         }
 
-        private Pixel[,] WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
+        public Pixel[,] WriteOnScreen(string text) //Writes to PixelArray given string starting from current cursor position
         {
             char[] textArray = text.ToCharArray();
             for (int i = 0; i < textArray.Length; i++)
             {
-                if (CursorPosX > screenWidth - DisplayMargin) NewLine();
+                //if (CursorPosX > screenWidth - DisplayMargin) NewLine();
                 switch (textArray[i])
                 {
                     case ' ':
@@ -191,20 +191,9 @@ namespace Display
 
         private void DrawPixel(int x, int y) //Set single pixel in PixelArray
         {
-            try
-            {
-                if ((x < 0 + DisplayMargin) || (x >= 128 - DisplayMargin) || (y < 0 + DisplayMargin) || (y >= 128 - DisplayMargin)) throw new System.IndexOutOfRangeException();
-                else
-                {
-                    pixelArray[y, x].Red = CurrentRed;
-                    pixelArray[y, x].Green = CurrentGreen;
-                    pixelArray[y, x].Blue = CurrentBlue;
-                }
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                Debug.WriteLine("Writing out of range!\n{0}", e.ToString());
-            }
+            pixelArray[y, x].Red = CurrentRed;
+            pixelArray[y, x].Green = CurrentGreen;
+            pixelArray[y, x].Blue = CurrentBlue;
         }  
 
         private void DrawHorizontalLine(int length, int startPosX, int startPosY) //Draw horizontal line from given position
@@ -222,7 +211,7 @@ namespace Display
             }
         }
 
-        private void DrawFrame(int length, int height, int borderThickness, int startPosX, int startPosY) //Draw frame from given position with given thickness
+        private void DrawFrame(int length, int height, int borderThickness, int startPosY, int startPosX) //Draw frame from given position with given thickness
         {
             for (int i = 0; i < borderThickness; i++) {
                 DrawHorizontalLine(length, startPosX, startPosY + i);
@@ -232,7 +221,7 @@ namespace Display
             }
         }
 
-        private void DrawRectangle(int length, int height, int startPosX, int startPosY) //Draw rectangle from given position
+        private void DrawRectangle(int length, int height, int startPosY, int startPosX) //Draw rectangle from given position
         {
             for (int i = 0; i < height; i++)
             {
