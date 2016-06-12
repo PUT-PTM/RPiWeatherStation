@@ -163,6 +163,27 @@ namespace Display
                     case 'S':
                         WriteS();
                         break;
+                    case 'T':
+                        WriteT();
+                        break;
+                    case 'U':
+                        WriteU();
+                        break;
+                    case 'W':
+                        WriteW();
+                        break;
+                    case 'V':
+                        WriteV();
+                        break;
+                    case 'Y':
+                        WriteY();
+                        break;
+                    case 'X':
+                        WriteX();
+                        break;
+                    case 'Z':
+                        WriteZ();
+                        break;
                 }
             }
             return pixelArray;
