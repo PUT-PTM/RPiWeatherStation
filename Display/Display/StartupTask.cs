@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Net.Http;
-using Windows.ApplicationModel.Background;
-using Windows.Devices.Gpio;
 using System.Threading.Tasks;
-using Windows.Devices.Spi;
+using Windows.ApplicationModel.Background;
 using Windows.Devices.Enumeration;
-using System.Threading;
+using Windows.Devices.Gpio;
+using Windows.Devices.Spi;
 using Windows.System.Threading;
+
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
@@ -125,14 +123,45 @@ namespace Display
 
             font.SetCurrentPosition(0, 0);
             font.SetCurrentColor(63, 63, 63);
-            font.WriteOnScreen("123");
-            var pixelArray = font.pixelArray;
-              
+            //font.DisplayMargin = 0;
+            //font.CursorPosY = 0;
+            //font.CursorPosX = 0;
+            //font.CurrentRed = 0;
+            //font.CurrentGreen = 0;
+            //font.CurrentBlue = 0;
+            //font.InitPixelArray();
 
-            foreach (var pixel in pixelArray)
+            font.SetCurrentColor(63, 63, 63);
+            font.SetCurrentPosition(0, 0);
+            font.WriteOnScreen("WEATHER STATION");
+
+
+            //for (int j = 0; j < 128; j++)
+            //{
+            //    Debug.Write($": {j}");
+            //    for (int i = 0; i < 128; i++) { if (font.pixelArray[i, j].Blue == 63) Debug.Write("X"); else Debug.Write(" "); }
+            //    Debug.WriteLine("");
+            //}
+
+            foreach (var pixel in font.pixelArray)
             {
                 SendPixelData(pixel.Red, pixel.Green, pixel.Blue);
             }
+
+            // for(int i = 0; i < 127;i++)
+            // {
+
+            //     for (int j = 0; j < 127; j++)
+            //     {
+            //         pixel = pixelArray[j, i];
+            //         SendPixelData(pixel.Red, pixel.Green, pixel.Blue);
+
+            //     }
+
+
+            // }
+
+
 
             SendCommand(new byte[] { 0x00 }); //Interrupt Ram writing
         }
