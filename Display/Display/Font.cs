@@ -189,16 +189,16 @@ namespace Display
             return pixelArray;
         }
 
-        private void DrawPixel(int x, int y, byte red = 0, byte green = 0, byte blue = 0) //Set single pixel in PixelArray
+        private void DrawPixel(int x, int y) //Set single pixel in PixelArray
         {
             try
             {
                 if ((x < 0 + DisplayMargin) || (x >= 128 - DisplayMargin) || (y < 0 + DisplayMargin) || (y >= 128 - DisplayMargin)) throw new System.IndexOutOfRangeException();
                 else
                 {
-                    pixelArray[y, x].Red = red;
-                    pixelArray[y, x].Green = green;
-                    pixelArray[y, x].Blue = blue;
+                    pixelArray[y, x].Red = CurrentRed;
+                    pixelArray[y, x].Green = CurrentGreen;
+                    pixelArray[y, x].Blue = CurrentBlue;
                 }
             }
             catch (IndexOutOfRangeException e)
@@ -210,7 +210,7 @@ namespace Display
         private void DrawHorizontalLine(int length, int startPosX, int startPosY) //Draw horizontal line from given position
         {
             for (int i = 0; i < length; i++) {
-                DrawPixel(startPosY, startPosX + i, CurrentRed, CurrentGreen, CurrentBlue);
+                DrawPixel(startPosY, startPosX + i);
             }
         }
 
@@ -218,7 +218,25 @@ namespace Display
         {
             for (int i = 0; i < length; i++)
             {
-                DrawPixel(startPosY + i, startPosX, CurrentRed, CurrentGreen, CurrentBlue);
+                DrawPixel(startPosY + i, startPosX);
+            }
+        }
+
+        private void DrawFrame(int length, int height, int borderThickness, int startPosX, int startPosY) //Draw frame from given position with given thickness
+        {
+            for (int i = 0; i < borderThickness; i++) {
+                DrawHorizontalLine(length, startPosX, startPosY + i);
+                DrawHorizontalLine(length, startPosX, (startPosY+height) - i);
+                DrawVerticalLine(height, startPosX + i, startPosY);
+                DrawVerticalLine(height, (startPosX + length) - i, startPosY);
+            }
+        }
+
+        private void DrawRectangle(int length, int height, int startPosX, int startPosY) //Draw rectangle from given position
+        {
+            for (int i = 0; i < height; i++)
+            {
+                DrawVerticalLine(length, startPosX, startPosY + i);
             }
         }
 
