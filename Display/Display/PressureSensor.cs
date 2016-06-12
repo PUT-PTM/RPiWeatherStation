@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace Display
 {
-    public static class PressureSensor
+    public sealed class PressureSensor
     {
-        public static bool IsInitialized { get; private set; } = false;
-        public static double Temperature { get; private set; } = 0;
-        public static double Pressure { get; private set; } = 0;
+        public double Temperature { get; private set; } = 0;
+        public double Pressure { get; private set; } = 0;
 
         private static I2cDevice _sensor;
         private static CalibrationData _calibrationData;
@@ -48,7 +47,7 @@ namespace Display
         private const byte BMP180_CAL_MB = 0xBA;
         private const byte BMP180_CAL_MC = 0xBC;
         private const byte BMP180_CAL_MD = 0xBE;
-        internal static async Task InitializeAsync()
+        internal async Task InitializeAsync()
         {
             var selectorString = I2cDevice.GetDeviceSelector();
             var devices = await DeviceInformation.FindAllAsync(selectorString);
@@ -58,10 +57,9 @@ namespace Display
             _sensor = await I2cDevice.FromIdAsync(deviceId, settings);
             _calibrationData = new CalibrationData();
             ReadCalibrationData();
-            IsInitialized = true;
         }
    
-        private static void ReadCalibrationData()
+        private void ReadCalibrationData()
         {
             var data = WriteRead(BMP180_CAL_AC1, 2);
             Array.Reverse(data);
@@ -108,22 +106,22 @@ namespace Display
             _calibrationData.MD = BitConverter.ToInt16(data, 0);
         }
 
-        private static byte [] WriteRead(byte register, int length)
+        private byte [] WriteRead(byte register, int length)
         {
             var buffer = new byte[length];
             _sensor.WriteRead(new[] { register }, buffer);
             return buffer;
         }
 
-        private static async Task ReadUncompestatedTemperature()
+        private async Task ReadUncompestatedTemperature()
         {
             var command = new[] { BMP180_REG_CONTROL, BMP180_COM_TEMPERATURE };
             _sensor.Write(command);
             await Task.Delay(5);
             _uncompestatedTemperature= WriteRead(BMP180_REG_RESULT, 2); 
         }
-
-        private static async Task ReadUncompestatedPressure()
+    
+        private async Task ReadUncompestatedPressure()
         {
             var command = new[] { BMP180_REG_CONTROL, BMP180_COM_PRESSURE3 };
             _sensor.Write(command);
@@ -131,13 +129,13 @@ namespace Display
             _uncompestatedPressure = WriteRead(BMP180_REG_RESULT, 3);
         }
 
-        internal static async Task ReadRawData()
+        internal async Task ReadRawData()
         {
             await ReadUncompestatedTemperature();
             await ReadUncompestatedPressure();
         }
 
-        internal static void CalculateTemperatureAndPressure()
+        public void CalculateTemperatureAndPressure()
         {
             //Dokładność pomiarów
             var oss = 3;
@@ -183,7 +181,7 @@ namespace Display
         }
     }
 
-    public sealed class CalibrationData
+    public  sealed class CalibrationData
     {
         public short AC1 { get; set; }
         public short AC2 { get; set; }

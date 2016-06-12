@@ -87,7 +87,7 @@ namespace Display
             charWidth.Add(':', 4);
         }
 
-        private void InitPixelArray()   //Initializes array of pixels
+        public void InitPixelArray()   //Initializes array of pixels
         {
             for (int i = 0; i < screenHeight; i++)
             {
@@ -309,7 +309,7 @@ namespace Display
             CursorPosX += 3;
         }
 
-        private void NewLine() //Moves current cursir oisutuion to new line
+        public void NewLine() //Moves current cursir oisutuion to new line
         {
             CursorPosX = DisplayMargin + 1;
             CursorPosY += 15;

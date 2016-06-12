@@ -96,6 +96,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="Pixel.cs" />
     <Compile Include="PressureSensor.cs" />
