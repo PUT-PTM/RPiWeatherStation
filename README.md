@@ -22,14 +22,23 @@ Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data.
 
 <h3>How to compile</h3>
 
+
 <h3>Possible improvements</h3>
+<ul>
+  <li>Adding extra sensors</li>
+  <li>Adding proper font support for display</li>
+  <li>Fleshing out interface</li>
+</ul>
 
 <h3>License</h3>
+<a>This project can be used under MIT license</a>
 
 <h3>Credits</h3>
-<b>Wojtek Agacinski</b><br>
-<b>Adam Matuszak</b><br>
-<b>Gabriel Zdancewicz</b>
+<ul>
+  <li>Wojtek Agacinski</li>
+  <li>Adam Matuszak</li>
+  <li>Gabriel Zdancewicz</li>
+</ul>
 
 The project was conducted during the Microprocessor Lab course held by the Institute of Control and Information Engineering, Poznan University of Technology.
 Supervisor: Michał Fularz/Tomasz Mańkowski
