@@ -67,6 +67,10 @@ namespace Display
             DisplayPressure(pressure);
             SendToDisplay();
         }
+        public void DisplayError()
+        {
+            //TODO
+        }
         private void SendCommand(byte[] command)
         {
             _configurationPin.Write(GpioPinValue.Low);
