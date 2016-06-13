@@ -17,14 +17,16 @@ namespace Display
 {
     public sealed class Font
     {
-        int CursorPosX;
-        int CursorPosY;
-        int DisplayMargin;
-        byte CurrentRed, CurrentGreen, CurrentBlue;
+        int CursorPosX;     //Current position on X-axis of cursor
+        int CursorPosY;     //Current position on Y-axis of cursor
+        int DisplayMargin;  //Margin of pixels on display
+        byte CurrentRed, CurrentGreen, CurrentBlue; //Current values of colors used to draw
 
-        internal Pixel[,] pixelArray = new Pixel[128, 128];
-        int screenHeight = 128;
-        int screenWidth = 128;
+        const int screenHeight = 128;   //Dimension of display
+        const int screenWidth = 128;    //Dimension of display
+
+        internal Pixel[,] pixelArray = new Pixel[screenHeight, screenWidth];    //Container for drawing page to display
+        private Dictionary<char, int> charWidth = new Dictionary<char, int>();  //Container for characters width
 
         public Font(int margin)
         {
@@ -36,11 +38,10 @@ namespace Display
             CurrentBlue = 0;
             InitPixelArray();
             InitCharWidthDictionary();
+            InitInterface();
         }
 
-        private Dictionary<char, int> charWidth = new Dictionary<char, int>();
-
-        private void InitCharWidthDictionary()
+        private void InitCharWidthDictionary()  //Initializes dictionary of characters width
         {
             charWidth.Add('0', 5);
             charWidth.Add('1', 5);
@@ -315,7 +316,7 @@ namespace Display
             CursorPosY += 15;
         }
 
-        private void WriteZero() //Writes '0' to PixelArray string starting from current cursor position
+        private void WriteZero() //Writes '0' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 7, CursorPosX + 1);
@@ -324,7 +325,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteOne() //Writes '1' to PixelArray string starting from current cursor position
+        private void WriteOne() //Writes '1' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(2, CursorPosY + 1, CursorPosX);
             DrawHorizontalLine(5, CursorPosY + 7, CursorPosX);
@@ -332,7 +333,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteTwo() //Writes '2' to PixelArray string starting from current cursor position
+        private void WriteTwo() //Writes '2' to PixelArray starting from current cursor position
         {
             DrawPixel(CursorPosY + 1, CursorPosX);
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
@@ -344,7 +345,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteThree() //Writes '3' to PixelArray string starting from current cursor position
+        private void WriteThree() //Writes '3' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(5, CursorPosY, CursorPosX);
             DrawHorizontalLine(5, CursorPosY + 3, CursorPosX);
@@ -354,7 +355,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteFour() //Writes '4' to PixelArray string starting from current cursor position
+        private void WriteFour() //Writes '4' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(5, CursorPosY + 5, CursorPosX);
             DrawVerticalLine(8, CursorPosY, CursorPosX + 3);
@@ -365,7 +366,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteFive() //Writes '5' to PixelArray string starting from current cursor position
+        private void WriteFive() //Writes '5' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(5, CursorPosY, CursorPosX);
             DrawHorizontalLine(4, CursorPosY + 3, CursorPosX);
@@ -375,7 +376,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteSix() //Writes '6' to PixelArray string starting from current cursor position
+        private void WriteSix() //Writes '6' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -386,7 +387,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteSeven() //Writes '7' to PixelArray string starting from current cursor position
+        private void WriteSeven() //Writes '7' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(5, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 4);
@@ -396,7 +397,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteEight() //Writes '8' to PixelArray string starting from current cursor position
+        private void WriteEight() //Writes '8' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -408,7 +409,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteNine() //Writes '9' to PixelArray string starting from current cursor position
+        private void WriteNine() //Writes '9' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -419,7 +420,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteDegreeSymbol() //Writes degree symbol to PixelArray string starting from current cursor position
+        private void WriteDegreeSymbol() //Writes degree symbol to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(2, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(2, CursorPosY + 3, CursorPosX + 1);
@@ -428,7 +429,7 @@ namespace Display
             CursorPosX += 5;
         }
 
-        private void WriteA() //Writes 'A' to PixelArray string starting from current cursor position
+        private void WriteA() //Writes 'A' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -437,7 +438,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteB() //Writes 'B' to PixelArray string starting from current cursor position
+        private void WriteB() //Writes 'B' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -448,7 +449,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteC() //Writes 'C' to PixelArray string starting from current cursor position
+        private void WriteC() //Writes 'C' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 2);
             DrawHorizontalLine(3, CursorPosY + 7, CursorPosX + 2);
@@ -460,7 +461,7 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteD() //Writes 'D' to PixelArray string starting from current cursor position
+        private void WriteD() //Writes 'D' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 7, CursorPosX + 1);
@@ -471,7 +472,7 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteE() //Writes 'E' to PixelArray string starting from current cursor position
+        private void WriteE() //Writes 'E' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(4, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -480,7 +481,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteF() //Writes 'F' to PixelArray string starting from current cursor position
+        private void WriteF() //Writes 'F' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(4, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -488,7 +489,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteG() //Writes 'G' to PixelArray string starting from current cursor position
+        private void WriteG() //Writes 'G' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 2);
             DrawHorizontalLine(3, CursorPosY + 4, CursorPosX + 3);
@@ -501,7 +502,7 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteH() //Writes 'H' to PixelArray string starting from current cursor position
+        private void WriteH() //Writes 'H' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(4, CursorPosY + 3, CursorPosX + 1);
             DrawVerticalLine(8, CursorPosY, CursorPosX);
@@ -509,20 +510,20 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteI() //Writes 'I' to PixelArray string starting from current cursor position
+        private void WriteI() //Writes 'I' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX + 2);
             CursorPosX += 5;
         }
 
-        private void WriteJ() //Writes 'J' to PixelArray string starting from current cursor position
+        private void WriteJ() //Writes 'J' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(2, CursorPosY + 7, CursorPosX);
             DrawVerticalLine(7, CursorPosY, CursorPosX + 2);
             CursorPosX += 5;
         }
 
-        private void WriteK() //Writes 'K' to PixelArray string starting from current cursor position
+        private void WriteK() //Writes 'K' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY + 6, CursorPosX + 4);
@@ -535,14 +536,14 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteL() //Writes 'L' to PixelArray string starting from current cursor position
+        private void WriteL() //Writes 'L' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawHorizontalLine(3, CursorPosY + 7, CursorPosX + 1);
             CursorPosX += 6;
         }
 
-        private void WriteM() //Writes 'M' to PixelArray string starting from current cursor position
+        private void WriteM() //Writes 'M' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY, CursorPosX + 1);
@@ -556,7 +557,7 @@ namespace Display
             CursorPosX += 11;
         }
 
-        private void WriteN() //Writes 'N' to PixelArray string starting from current cursor position
+        private void WriteN() //Writes 'N' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY, CursorPosX + 1);
@@ -567,7 +568,7 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteO() //Writes 'O' to PixelArray string starting from current cursor position
+        private void WriteO() //Writes 'O' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(4, CursorPosY + 2, CursorPosX);
             DrawVerticalLine(4, CursorPosY + 2, CursorPosX + 6);
@@ -580,7 +581,7 @@ namespace Display
             CursorPosX += 9;
         }
 
-        private void WriteP() //Writes 'P' to PixelArray string starting from current cursor position
+        private void WriteP() //Writes 'P' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
@@ -589,7 +590,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteQ() //Writes 'Q' to PixelArray string starting from current cursor position
+        private void WriteQ() //Writes 'Q' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(4, CursorPosY + 2, CursorPosX);
             DrawVerticalLine(4, CursorPosY + 2, CursorPosX + 6);
@@ -603,7 +604,7 @@ namespace Display
             CursorPosX += 10;
         }
 
-        private void WriteR() //Writes 'R' to PixelArray string starting from current cursor position
+        private void WriteR() //Writes 'R' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(8, CursorPosY, CursorPosX);
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
@@ -614,7 +615,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteS() //Writes 'S' to PixelArray string starting from current cursor position
+        private void WriteS() //Writes 'S' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(3, CursorPosY, CursorPosX + 1);
             DrawHorizontalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -626,14 +627,14 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteT() //Writes 'T' to PixelArray string starting from current cursor position
+        private void WriteT() //Writes 'T' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(5, CursorPosY, CursorPosX + 1);
             DrawVerticalLine(7, CursorPosY + 1, CursorPosX + 3);
             CursorPosX += 8;
         }
 
-        private void WriteU() //Writes 'U' to PixelArray string starting from current cursor position
+        private void WriteU() //Writes 'U' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(4, CursorPosY + 7, CursorPosX + 1);
             DrawVerticalLine(7, CursorPosY, CursorPosX);
@@ -641,7 +642,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteW() //Writes 'W' to PixelArray string starting from current cursor position
+        private void WriteW() //Writes 'W' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(3, CursorPosY, CursorPosX);
             DrawVerticalLine(3, CursorPosY + 3, CursorPosX + 1);
@@ -655,7 +656,7 @@ namespace Display
             CursorPosX += 11;
         }
 
-        private void WriteV() //Writes 'V' to PixelArray string starting from current cursor position
+        private void WriteV() //Writes 'V' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(3, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY + 3, CursorPosX + 1);
@@ -667,7 +668,7 @@ namespace Display
             CursorPosX += 9;
         }
 
-        private void WriteX() //Writes 'X' to PixelArray string starting from current cursor position
+        private void WriteX() //Writes 'X' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(2, CursorPosY, CursorPosX);
             DrawVerticalLine(2, CursorPosY, CursorPosX + 4);
@@ -681,7 +682,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteY() //Writes 'Y' to PixelArray string starting from current cursor position
+        private void WriteY() //Writes 'Y' to PixelArray starting from current cursor position
         {
             DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 1);
             DrawVerticalLine(2, CursorPosY + 1, CursorPosX + 3);
@@ -691,7 +692,7 @@ namespace Display
             CursorPosX += 7;
         }
 
-        private void WriteZ() //Writes 'Z' to PixelArray string starting from current cursor position
+        private void WriteZ() //Writes 'Z' to PixelArray starting from current cursor position
         {
             DrawHorizontalLine(6, CursorPosY, CursorPosX);
             DrawHorizontalLine(6, CursorPosY + 7, CursorPosX);
@@ -704,7 +705,7 @@ namespace Display
             CursorPosX += 8;
         }
 
-        private void WriteDot()
+        private void WriteDot() //Writes '.' to PixelArray starting from current cursor position
         {
             DrawPixel(CursorPosY + 7, CursorPosX);
             DrawPixel(CursorPosY + 6, CursorPosX);
@@ -713,7 +714,7 @@ namespace Display
             CursorPosX += 4;
         }
 
-        private void WriteComma()
+        private void WriteComma() //Writes ',' to PixelArray starting from current cursor position
         {
             DrawPixel(CursorPosY + 7, CursorPosX);
             DrawPixel(CursorPosY + 6, CursorPosX);
@@ -724,7 +725,7 @@ namespace Display
             CursorPosX += 4;
         }
 
-        private void WriteSemicolon()
+        private void WriteSemicolon() //Writes ';' to PixelArray starting from current cursor position
         {
             DrawPixel(CursorPosY + 2, CursorPosX);
             DrawPixel(CursorPosY + 3, CursorPosX);
@@ -740,7 +741,7 @@ namespace Display
             CursorPosX += 4;
         }
 
-        private void WriteColon()
+        private void WriteColon() //Writes ':' to PixelArray starting from current cursor position
         {
             DrawPixel(CursorPosY + 2, CursorPosX);
             DrawPixel(CursorPosY + 3, CursorPosX);
@@ -752,6 +753,49 @@ namespace Display
             DrawPixel(CursorPosY + 7, CursorPosX + 1);
             DrawPixel(CursorPosY + 6, CursorPosX + 1);
             CursorPosX += 4;
+        }
+
+        private void ErrorSymbol() //Writes error symbol to PixelArray on predefined position
+        {
+            DrawVerticalLine(2, 111, 9);
+            DrawVerticalLine(2, 113, 8);
+            DrawVerticalLine(2, 113, 10);
+            DrawVerticalLine(2, 115, 7);
+            DrawVerticalLine(2, 115, 11);
+            DrawVerticalLine(2, 117, 6);
+            DrawVerticalLine(2, 117, 12);
+            DrawVerticalLine(2, 119, 5);
+            DrawVerticalLine(2, 119, 13);
+            DrawVerticalLine(2, 121, 4);
+            DrawVerticalLine(2, 121, 14);
+            DrawHorizontalLine(11, 123, 4);
+            DrawPixel(121, 9);
+            DrawVerticalLine(4, 116, 9);
+        }
+
+        private void ErrorSignal(string message = "UNKNOWN ERROR") //Writes massage with error symbol to PixelArray on predefined position
+        {
+            int LastPosX = CursorPosX;
+            int LastPosY = CursorPosY;
+            ErrorSymbol();
+            SetCurrentPosition(16, 114);
+            WriteOnScreen(message);
+            SetCurrentPosition(LastPosX, LastPosY);
+        }
+
+        private void InitInterface() //Initializes standard interface for application
+        {
+            DrawFrame(126, 126, 2, 1, 1);
+            SetCurrentPosition(10, 4);
+            WriteOnScreen("WEATHER  STATION");
+            SetCurrentPosition(8, 14);
+            WriteOnScreen("ON  RASPBERRY  PI  2");
+            DrawHorizontalLine(122, 23, 3);
+            DrawHorizontalLine(122, 24, 3);
+            SetCurrentPosition(16, 32);
+            WriteOnScreen("CURRENT  STATE:");
+            NewLine();
+            SetCurrentPosition(CursorPosX + 4, CursorPosY);
         }
     }
 }
