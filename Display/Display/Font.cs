@@ -19,7 +19,6 @@ namespace Display
     {
         int CursorPosX;     //Current position on X-axis of cursor
         int CursorPosY;     //Current position on Y-axis of cursor
-        int DisplayMargin;  //Margin of pixels on display
         byte CurrentRed, CurrentGreen, CurrentBlue; //Current values of colors used to draw
 
         const int screenHeight = 128;   //Dimension of display
@@ -28,14 +27,13 @@ namespace Display
         internal Pixel[,] pixelArray = new Pixel[screenHeight, screenWidth];    //Container for drawing page to display
         private Dictionary<char, int> charWidth = new Dictionary<char, int>();  //Container for characters width
 
-        public Font(int margin)
+        public Font(byte red,byte green, byte blue)
         {
-            DisplayMargin = margin;
-            CursorPosY = margin + 1;
-            CursorPosX = margin + 1;
-            CurrentRed = 0;
-            CurrentGreen = 0;
-            CurrentBlue = 0;
+            CursorPosY = 1;
+            CursorPosX = 1;
+            CurrentRed = red;
+            CurrentGreen = green;
+            CurrentBlue = blue;
             InitPixelArray();
             InitCharWidthDictionary();
             InitInterface();
@@ -117,7 +115,7 @@ namespace Display
             char[] textArray = text.ToCharArray();
             for (int i = 0; i < textArray.Length; i++)
             {
-                if ((CursorPosX > screenWidth - DisplayMargin) || (CursorPosX + charWidth[textArray[i]] > screenWidth - DisplayMargin)) NewLine();
+                if ((CursorPosX > screenWidth) || (CursorPosX + charWidth[textArray[i]] > screenWidth)) NewLine();
                 switch (textArray[i])
                 {
                     case ' ':
@@ -256,7 +254,7 @@ namespace Display
         {
             try
             {
-                if ((x < 0 + DisplayMargin) || (x >= 128 - DisplayMargin) || (y < 0 + DisplayMargin) || (y >= 128 - DisplayMargin)) throw new System.IndexOutOfRangeException();
+                if ((x < 0) || (x >= screenWidth) || (y < 0) || (y >= screenHeight)) throw new System.IndexOutOfRangeException();
                 else
                 {
                     pixelArray[y, x].Red = CurrentRed;
@@ -312,7 +310,7 @@ namespace Display
 
         public void NewLine() //Moves current cursir oisutuion to new line
         {
-            CursorPosX = DisplayMargin + 1;
+            CursorPosX = 1;
             CursorPosY += 15;
         }
 
