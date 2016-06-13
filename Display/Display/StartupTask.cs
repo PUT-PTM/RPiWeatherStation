@@ -22,8 +22,15 @@ namespace Display
 
             //Initialize pressure sensor
             _pressureSensor = new PressureSensor();
-            await _pressureSensor.InitializeAsync(); //Problems here often
-  
+            try
+            {
+                await _pressureSensor.InitializeAsync(); //Problems here often
+            }
+           catch(Exception e)
+            {
+                _display.DisplayError();
+            }
+
             //Periodic timer, which read and display data
             _timer = ThreadPoolTimer.CreatePeriodicTimer(TimerTick, TimeSpan.FromMilliseconds(10000));
         }
