@@ -21,7 +21,7 @@ namespace Display
 
         public Display()
         {
-            _fontManager = new Font(5);
+            _fontManager = new Font(0);
         }
         public void InitGpio()
         {
@@ -59,17 +59,17 @@ namespace Display
         }
         public void DisplayMeasurements(double temperature, double pressure)
         {
-            _fontManager.InitPixelArray();
-            _fontManager.SetCurrentColor(63, 63, 63);
-            _fontManager.SetCurrentPosition(5, 5);
+            _fontManager.InitInterface();
+            _fontManager.NewLine();
             DisplayTemperature(temperature);
             _fontManager.NewLine();
             DisplayPressure(pressure);
             SendToDisplay();
         }
-        public void DisplayError()
+        public void DisplayError(string message)
         {
-            //TODO
+            _fontManager.ErrorSignal(message);
+           // SendToDisplay();
         }
         private void SendCommand(byte[] command)
         {
@@ -104,12 +104,12 @@ namespace Display
         }
         private void DisplayTemperature(double temperature)
         {
-            var tempString = $"TEMPERATURA: {temperature}";
+            var tempString = $"TEMP: {temperature} \\rC";
             _fontManager.WriteOnScreen(tempString);
         }
         private void DisplayPressure(double pressure)
         {
-            var tempString = $"CISNIENIE: {pressure}";
+            var tempString = $"PRESS: {pressure} HPA";
             _fontManager.WriteOnScreen(tempString);
         }
         private void SendToDisplay()

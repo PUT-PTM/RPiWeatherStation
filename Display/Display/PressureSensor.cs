@@ -9,11 +9,12 @@ namespace Display
     {
         public double Temperature { get; private set; } = 0;
         public double Pressure { get; private set; } = 0;
+        public bool IsInitialized { get; set; } = false;
 
-        private static I2cDevice _sensor;
-        private static CalibrationData _calibrationData;
-        private static byte[] _uncompestatedTemperature;
-        private static byte[] _uncompestatedPressure;
+        private I2cDevice _sensor;
+        private CalibrationData _calibrationData;
+        private byte[] _uncompestatedTemperature;
+        private byte[] _uncompestatedPressure;
 
         //Adres czujnika
         private const byte MP180_ADDR = 0x77;
@@ -54,13 +55,10 @@ namespace Display
             var deviceId = devices[0].Id;
             var settings = new I2cConnectionSettings(MP180_ADDR);
             settings.BusSpeed = I2cBusSpeed.StandardMode;
-            settings.SharingMode = I2cSharingMode.Exclusive;
             _sensor = await I2cDevice.FromIdAsync(deviceId, settings); 
-
-            var result = WriteRead(BMP180_REG_CHIPID, 2);
-
             _calibrationData = new CalibrationData();
             ReadCalibrationData();
+            IsInitialized = true;
         }
    
         private void ReadCalibrationData()

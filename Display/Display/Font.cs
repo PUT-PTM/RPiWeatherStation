@@ -33,9 +33,9 @@ namespace Display
             DisplayMargin = margin;
             CursorPosY = margin + 1;
             CursorPosX = margin + 1;
-            CurrentRed = 0;
-            CurrentGreen = 0;
-            CurrentBlue = 0;
+            CurrentRed = 63;
+            CurrentGreen = 63;
+            CurrentBlue =  63;
             InitPixelArray();
             InitCharWidthDictionary();
             InitInterface();
@@ -312,7 +312,7 @@ namespace Display
 
         public void NewLine() //Moves current cursir oisutuion to new line
         {
-            CursorPosX = DisplayMargin + 1;
+            CursorPosX = DisplayMargin + 5;
             CursorPosY += 15;
         }
 
@@ -773,7 +773,7 @@ namespace Display
             DrawVerticalLine(4, 116, 9);
         }
 
-        private void ErrorSignal(string message = "UNKNOWN ERROR") //Writes massage with error symbol to PixelArray on predefined position
+        public void ErrorSignal(string message) //Writes massage with error symbol to PixelArray on predefined position
         {
             int LastPosX = CursorPosX;
             int LastPosY = CursorPosY;
@@ -783,8 +783,9 @@ namespace Display
             SetCurrentPosition(LastPosX, LastPosY);
         }
 
-        private void InitInterface() //Initializes standard interface for application
+        public void InitInterface() //Initializes standard interface for application
         {
+            InitPixelArray();
             DrawFrame(126, 126, 2, 1, 1);
             SetCurrentPosition(10, 4);
             WriteOnScreen("WEATHER  STATION");
@@ -794,8 +795,7 @@ namespace Display
             DrawHorizontalLine(122, 24, 3);
             SetCurrentPosition(16, 32);
             WriteOnScreen("CURRENT  STATE:");
-            NewLine();
-            SetCurrentPosition(CursorPosX + 4, CursorPosY);
+            //SetCurrentPosition(CursorPosX + 4, CursorPosY);
         }
     }
 }
