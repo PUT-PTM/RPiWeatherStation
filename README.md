@@ -8,8 +8,10 @@
 Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data. This data is also saved by external api which contains previous measurements.</a>
 
 <h3>Tools</h3>
-<a>Visual Studio 2015</a>
-<a>Windows 10 IoT Core Dashboard</a>
+<ul>
+  <li>Visual Studio 2015</li>
+  <li>Windows 10 IoT Core Dashboard</li>
+</ul>
 
 <h3>How to run</h3>
 <a>To run the project you need:
