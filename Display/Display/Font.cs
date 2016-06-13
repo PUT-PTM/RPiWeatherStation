@@ -290,10 +290,10 @@ namespace Display
         {
             for (int i = 0; i < borderThickness; i++)
             {
-                DrawHorizontalLine(length, startPosY, startPosX + i);
-                DrawHorizontalLine(length, startPosY, (startPosX + height) - i);
-                DrawVerticalLine(height, startPosY + i, startPosX);
-                DrawVerticalLine(height, (startPosY + length) - i, startPosX);
+                DrawHorizontalLine(length, startPosY + i, startPosX);
+                DrawHorizontalLine(length, startPosY + height - i - 1, startPosX);
+                DrawVerticalLine(height, startPosY, startPosX + i);
+                DrawVerticalLine(height, startPosY, startPosX + length - i - 1);
             }
         }
 
