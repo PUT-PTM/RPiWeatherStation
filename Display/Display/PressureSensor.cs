@@ -26,7 +26,7 @@ namespace Display
         //Adres wynikowy
         private const byte BMP180_REG_RESULT = 0xF6;
         //Rejestr temperatury 
-        private const byte BMP180_COM_TEMPERATURE = 0x2E;
+        private const byte BMP180_COM_TEMPERATURE = 0x2E; 
         //Rejestr ciśnienia w trybie Ultra Low Power
         private const byte BMP180_COM_PRESSURE0 = 0x34;
         //Rejestr ciśnienia w trybie Standard
@@ -54,7 +54,11 @@ namespace Display
             var deviceId = devices[0].Id;
             var settings = new I2cConnectionSettings(MP180_ADDR);
             settings.BusSpeed = I2cBusSpeed.StandardMode;
-            _sensor = await I2cDevice.FromIdAsync(deviceId, settings);
+            settings.SharingMode = I2cSharingMode.Exclusive;
+            _sensor = await I2cDevice.FromIdAsync(deviceId, settings); 
+
+            var result = WriteRead(BMP180_REG_CHIPID, 2);
+
             _calibrationData = new CalibrationData();
             ReadCalibrationData();
         }
@@ -125,7 +129,7 @@ namespace Display
         {
             var command = new[] { BMP180_REG_CONTROL, BMP180_COM_PRESSURE3 };
             _sensor.Write(command);
-            await Task.Delay(17);
+            await Task.Delay(26);
             _uncompestatedPressure = WriteRead(BMP180_REG_RESULT, 3);
         }
 
@@ -181,7 +185,7 @@ namespace Display
         }
     }
 
-    public  sealed class CalibrationData
+    public sealed class CalibrationData
     {
         public short AC1 { get; set; }
         public short AC2 { get; set; }
