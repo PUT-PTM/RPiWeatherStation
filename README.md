@@ -31,7 +31,7 @@ Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data.
 </ul>
 
 <h3>License</h3>
-<a>This project can be used under MIT license</a>
+<a>This project can be used under <a href="https://github.com/PUT-PTM/RPiWeatherStation/blob/develop/LICENSE.md#the-mit-license-mit">MIT license</a></a>
 
 <h3>Credits</h3>
 <ul>
