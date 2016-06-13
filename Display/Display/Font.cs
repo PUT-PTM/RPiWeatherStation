@@ -27,7 +27,7 @@ namespace Display
         internal Pixel[,] pixelArray = new Pixel[screenHeight, screenWidth];    //Container for drawing page to display
         private Dictionary<char, int> charWidth = new Dictionary<char, int>();  //Container for characters width
 
-        public Font(byte red,byte green, byte blue)
+        public Font(byte red = 0, byte green = 0, byte blue = 0)
         {
             CursorPosY = 1;
             CursorPosX = 1;
