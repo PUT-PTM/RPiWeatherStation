@@ -103,7 +103,7 @@ namespace Display
             CursorPosX = x;
         }
 
-        private void SetCurrentColor(byte SetRed, byte SetGreen, byte SetBlue) //Sets current color for pixels in PixelArray
+        public void SetCurrentColor(byte SetRed, byte SetGreen, byte SetBlue) //Sets current color for pixels in PixelArray
         {
             CurrentRed = SetRed;
             CurrentGreen = SetGreen;
