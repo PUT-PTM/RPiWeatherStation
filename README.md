@@ -22,7 +22,10 @@ Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data.
 </ul></a>
 
 <h3>How to compile</h3>
-
+<ul>
+  <li>Make sure you have installed Visual Studio 2015 with Update 2 and Universal Windows App Development Tools</li>
+  <li>Enable developer mode on your device running Visual Studio</li>
+</ul>
 
 <h3>Possible improvements</h3>
 <ul>
