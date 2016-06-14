@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Display.cs" />
     <Compile Include="Font.cs" />
+    <Compile Include="Measurement.cs" />
     <Compile Include="Pixel.cs" />
     <Compile Include="PressureSensor.cs" />
     <Compile Include="StartupTask.cs" />

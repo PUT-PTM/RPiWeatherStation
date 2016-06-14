@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -75,7 +76,9 @@ namespace Display
 
         private void SendToApi(double temperature, double pressure)
         {
-            //TODO
+            var measurements = new Measurement();
+            var json = JsonConvert.SerializeObject(measurements);
+            //Send serialized result
         }
 
     }
