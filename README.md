@@ -1,11 +1,11 @@
 <h1>RPiWeatherStation</h1>
 
 <h3>Overview</h3>
-<a>RPiWeatherStation is wheater station able to display measured data and save it on external api.</a>
+<a>RPiWeatherStation is weather station able to display measured data and save it on external Web API.</a>
 
 <h3>Description</h3>
-<a>RPiWeatherStation is a project for Raspberry Pi 2 on Windows 10 IoT. Station is able to measure temperature and atmospheric pressure.
-Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data. This data is also saved by external api which contains previous measurements.</a>
+<a>RPiWeatherStation is a project for Raspberry Pi 2 using Windows 10 IoT Core. Station is able to measure temperature and atmospheric pressure.
+Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data. This data is also saved to external Web API which contains previous measurements.</a>
 
 <h3>Tools</h3>
 <ul>
@@ -18,12 +18,20 @@ Raspberry uses 1.44" 128x 128 TFT LCD with SPI display to present measured data.
 <ul>
   <li>Raspberry Pi 2</li>
   <li>1.44" 128x 128 TFT LCD</li>
-  <li>Temperature senso</li>
-  <li>Atmospheric pressure sensor</li>
+  <li>Bosch BMP180 sensor</li>
 </ul></a>
 
 <h3>How to compile</h3>
-
+<ul>
+  <li>Make sure you have installed Visual Studio 2015 with Update 2 and Universal Windows App Development Tools</li>
+  <li>Enable developer mode on your device running Visual Studio</li>
+  <li>Open solution </li>
+  <li>In Build bar select "Debug", "ARM", "Remote Machine" options</li>
+  <li>Run "Debug"</li>
+  <li>Click "Yes", when dialog box asks for specifying remote machine</li>
+  <li>Enter your Raspberry Pi network adress and authentication manually, or using Auto Detect feature</li>
+  <li>If device is online and settings are correct, your app should be deployed</li>
+</ul>
 
 <h3>Possible improvements</h3>
 <ul>
