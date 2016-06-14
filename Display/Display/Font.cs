@@ -17,17 +17,17 @@ namespace Display
 {
     public sealed class Font
     {
-        int CursorPosX;     //Current position on X-axis of cursor
-        int CursorPosY;     //Current position on Y-axis of cursor
-        byte CurrentRed, CurrentGreen, CurrentBlue; //Current values of colors used to draw
+        private int CursorPosX;     //Current position on X-axis of cursor
+        private int CursorPosY;     //Current position on Y-axis of cursor
+        private byte CurrentRed, CurrentGreen, CurrentBlue; //Current values of colors used to draw
 
-        const int screenHeight = 128;   //Dimension of display
-        const int screenWidth = 128;    //Dimension of display
+        private const int screenHeight = 128;   //Dimension of display
+        private const int screenWidth = 128;    //Dimension of display
 
         internal Pixel[,] pixelArray = new Pixel[screenHeight, screenWidth];    //Container for drawing page to display
         private Dictionary<char, int> charWidth = new Dictionary<char, int>();  //Container for characters width
 
-        public Font(byte red = 0, byte green = 0, byte blue = 0)
+        public Font(byte red, byte green ,byte blue)
         {
             CursorPosY = 1;
             CursorPosX = 1;
@@ -97,13 +97,13 @@ namespace Display
             }
         }
 
-        public void SetCurrentPosition(int x, int y) //Sets current cursor position for PixelArray
+        private void SetCurrentPosition(int x, int y) //Sets current cursor position for PixelArray
         {
             CursorPosY = y;
             CursorPosX = x;
         }
 
-        public void SetCurrentColor(byte SetRed, byte SetGreen, byte SetBlue) //Sets current color for pixels in PixelArray
+        private void SetCurrentColor(byte SetRed, byte SetGreen, byte SetBlue) //Sets current color for pixels in PixelArray
         {
             CurrentRed = SetRed;
             CurrentGreen = SetGreen;
@@ -247,7 +247,6 @@ namespace Display
                         break;
                 }
             }
-            //  return pixelArray;
         }
 
         private void DrawPixel(int y, int x) //Set single pixel in PixelArray
@@ -793,7 +792,6 @@ namespace Display
             DrawHorizontalLine(122, 24, 3);
             SetCurrentPosition(16, 32);
             WriteOnScreen("CURRENT  STATE:");
-            //SetCurrentPosition(CursorPosX + 4, CursorPosY);
         }
     }
 }

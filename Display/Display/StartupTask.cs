@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using Windows.ApplicationModel.Background;
 using Windows.System.Threading;
 
@@ -11,6 +13,7 @@ namespace Display
         private ThreadPoolTimer _timer;
         private Display _display;
         private PressureSensor _pressureSensor;
+        private int _ticksCounter = 0;
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             deferral = taskInstance.GetDeferral();
@@ -25,11 +28,12 @@ namespace Display
             _pressureSensor = new PressureSensor();
 
             //Periodic timer, which read and display data
-            _timer = ThreadPoolTimer.CreatePeriodicTimer(TimerTick, TimeSpan.FromMilliseconds(30000));
+            _timer = ThreadPoolTimer.CreatePeriodicTimer(TimerTick, TimeSpan.FromMilliseconds(10000));
         }
 
         private async void TimerTick(ThreadPoolTimer timer)
         {
+            _display.InitInterface();
             try
             {
                 if(_pressureSensor.IsInitialized)
@@ -46,7 +50,7 @@ namespace Display
                 }    
             }
 
-            catch(FileNotFoundException e)
+            catch(Exception e)
             {
                 _display.DisplayError("SENSOR PROBLEM");
             }
@@ -58,7 +62,20 @@ namespace Display
 
                 //Write data to screen
                 _display.DisplayMeasurements(temperature, pressure);
+
+                //Once per minute, sent measurements to Api
+                _ticksCounter++;
+                if (_ticksCounter % 6 == 0)
+                {
+                    SendToApi(temperature, pressure);
+                }
+
             }
+        }
+
+        private void SendToApi(double temperature, double pressure)
+        {
+            //TODO
         }
 
     }

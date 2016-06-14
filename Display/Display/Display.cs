@@ -21,7 +21,7 @@ namespace Display
 
         public Display()
         {
-            _fontManager = new Font(0);
+            _fontManager = new Font(63,63,63);
         }
         public void InitGpio()
         {
@@ -59,17 +59,19 @@ namespace Display
         }
         public void DisplayMeasurements(double temperature, double pressure)
         {
-            _fontManager.InitInterface();
-            _fontManager.NewLine();
-            DisplayTemperature(temperature);
-            _fontManager.NewLine();
+            DisplayTemperature(temperature); 
             DisplayPressure(pressure);
             SendToDisplay();
         }
         public void DisplayError(string message)
         {
+            _fontManager.SetCurrentColor(0, 63, 36);
             _fontManager.ErrorSignal(message);
-           // SendToDisplay();
+            _fontManager.SetCurrentColor(63, 63, 63);
+        }
+        public void InitInterface()
+        {
+            _fontManager.InitInterface();
         }
         private void SendCommand(byte[] command)
         {
@@ -104,13 +106,21 @@ namespace Display
         }
         private void DisplayTemperature(double temperature)
         {
-            var tempString = $"TEMP: {temperature} \\rC";
-            _fontManager.WriteOnScreen(tempString);
+            _fontManager.NewLine();
+            _fontManager.WriteOnScreen("TEMP: ");
+            _fontManager.SetCurrentColor(0, 63, 0);
+            _fontManager.WriteOnScreen(temperature.ToString());
+            _fontManager.SetCurrentColor(63, 63, 63);
+            _fontManager.WriteOnScreen(" \\rC");
         }
         private void DisplayPressure(double pressure)
         {
-            var tempString = $"PRESS: {pressure} HPA";
-            _fontManager.WriteOnScreen(tempString);
+            _fontManager.NewLine();
+            _fontManager.WriteOnScreen("PRESS: ");
+            _fontManager.SetCurrentColor(0, 63, 0);
+            _fontManager.WriteOnScreen(pressure.ToString());
+            _fontManager.SetCurrentColor(63, 63, 63);
+            _fontManager.WriteOnScreen(" HPA");
         }
         private void SendToDisplay()
         {
