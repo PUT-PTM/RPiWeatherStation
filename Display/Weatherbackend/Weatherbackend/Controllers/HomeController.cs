@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Weatherbackend.Controllers
+namespace WeatherBackend.Controllers
 {
     public class HomeController : Controller
     {

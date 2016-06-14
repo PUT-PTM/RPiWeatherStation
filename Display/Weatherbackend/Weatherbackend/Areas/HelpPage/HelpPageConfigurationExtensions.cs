@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using Weatherbackend.Areas.HelpPage.ModelDescriptions;
-using Weatherbackend.Areas.HelpPage.Models;
+using WeatherBackend.Areas.HelpPage.ModelDescriptions;
+using WeatherBackend.Areas.HelpPage.Models;
 
-namespace Weatherbackend.Areas.HelpPage
+namespace WeatherBackend.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

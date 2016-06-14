@@ -9,48 +9,48 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Weatherbackend.Models;
+using WeatherBackend.Models;
 
-namespace Weatherbackend.Controllers
+namespace WeatherBackend.Controllers
 {
     public class MeasurementsController : ApiController
     {
-        private WeatherbackendContext db = new WeatherbackendContext();
+        private WeatherBackendContext db = new WeatherBackendContext();
 
         // GET: api/Measurements
-        public IQueryable<Measurements> GetMeasurements()
+        public IQueryable<Measurement> GetMeasurements()
         {
             return db.Measurements;
         }
 
         // GET: api/Measurements/5
-        [ResponseType(typeof(Measurements))]
-        public async Task<IHttpActionResult> GetMeasurements(int id)
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> GetMeasurement(int id)
         {
-            Measurements measurements = await db.Measurements.FindAsync(id);
-            if (measurements == null)
+            Measurement measurement = await db.Measurements.FindAsync(id);
+            if (measurement == null)
             {
                 return NotFound();
             }
 
-            return Ok(measurements);
+            return Ok(measurement);
         }
 
         // PUT: api/Measurements/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutMeasurements(int id, Measurements measurements)
+        public async Task<IHttpActionResult> PutMeasurement(int id, Measurement measurement)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != measurements.Id)
+            if (id != measurement.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(measurements).State = EntityState.Modified;
+            db.Entry(measurement).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace Weatherbackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MeasurementsExists(id))
+                if (!MeasurementExists(id))
                 {
                     return NotFound();
                 }
@@ -72,34 +72,34 @@ namespace Weatherbackend.Controllers
         }
 
         // POST: api/Measurements
-        [ResponseType(typeof(Measurements))]
-        public async Task<IHttpActionResult> PostMeasurements(Measurements measurements)
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> PostMeasurement(Measurement measurement)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Measurements.Add(measurements);
+            db.Measurements.Add(measurement);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = measurements.Id }, measurements);
+            return CreatedAtRoute("DefaultApi", new { id = measurement.Id }, measurement);
         }
 
         // DELETE: api/Measurements/5
-        [ResponseType(typeof(Measurements))]
-        public async Task<IHttpActionResult> DeleteMeasurements(int id)
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> DeleteMeasurement(int id)
         {
-            Measurements measurements = await db.Measurements.FindAsync(id);
-            if (measurements == null)
+            Measurement measurement = await db.Measurements.FindAsync(id);
+            if (measurement == null)
             {
                 return NotFound();
             }
 
-            db.Measurements.Remove(measurements);
+            db.Measurements.Remove(measurement);
             await db.SaveChangesAsync();
 
-            return Ok(measurements);
+            return Ok(measurement);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,7 +111,7 @@ namespace Weatherbackend.Controllers
             base.Dispose(disposing);
         }
 
-        private bool MeasurementsExists(int id)
+        private bool MeasurementExists(int id)
         {
             return db.Measurements.Count(e => e.Id == id) > 0;
         }

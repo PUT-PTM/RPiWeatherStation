@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace Weatherbackend.Areas.HelpPage
+namespace WeatherBackend.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

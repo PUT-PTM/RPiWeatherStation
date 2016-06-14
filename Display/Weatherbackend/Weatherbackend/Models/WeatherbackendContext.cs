@@ -4,9 +4,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace Weatherbackend.Models
+namespace WeatherBackend.Models
 {
-    public class WeatherbackendContext : DbContext
+    public class WeatherBackendContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
@@ -15,10 +15,10 @@ namespace Weatherbackend.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public WeatherbackendContext() : base("name=WeatherbackendContext")
+        public WeatherBackendContext() : base("name=WeatherBackendContext")
         {
         }
 
-        public System.Data.Entity.DbSet<Weatherbackend.Models.Measurements> Measurements { get; set; }
+        public System.Data.Entity.DbSet<WeatherBackend.Models.Measurement> Measurements { get; set; }
     }
 }

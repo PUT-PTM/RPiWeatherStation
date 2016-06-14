@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Weatherbackend.Controllers
+namespace WeatherBackend.Controllers
 {
     public class ValuesController : ApiController
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Weatherbackend.Areas.HelpPage.ModelDescriptions
+namespace WeatherBackend.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterAnnotation
     {

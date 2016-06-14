@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using Weatherbackend.Areas.HelpPage.ModelDescriptions;
-using Weatherbackend.Areas.HelpPage.Models;
+using WeatherBackend.Areas.HelpPage.ModelDescriptions;
+using WeatherBackend.Areas.HelpPage.Models;
 
-namespace Weatherbackend.Areas.HelpPage.Controllers
+namespace WeatherBackend.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

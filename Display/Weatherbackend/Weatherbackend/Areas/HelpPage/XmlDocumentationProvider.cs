@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using Weatherbackend.Areas.HelpPage.ModelDescriptions;
+using WeatherBackend.Areas.HelpPage.ModelDescriptions;
 
-namespace Weatherbackend.Areas.HelpPage
+namespace WeatherBackend.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

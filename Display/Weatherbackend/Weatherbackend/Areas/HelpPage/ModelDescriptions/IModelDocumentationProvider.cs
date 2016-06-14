@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Weatherbackend.Areas.HelpPage.ModelDescriptions
+namespace WeatherBackend.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {
